@@ -7,11 +7,9 @@ const Home = async () => {
 
   const movies: any = await responses.json();
 
-  console.log('movies => ', movies.data);
-
   return (
-    <div>
-      <h1 className="text-2xl">Paling Populer</h1>
+    <div className="p-10">
+      <h1 className="text-4xl mb-4 font-bold">Paling Populer</h1>
       <MovieList movies={movies} />
     </div>
   );
