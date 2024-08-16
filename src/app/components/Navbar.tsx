@@ -1,37 +1,47 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+
+const menus = [
+    {
+        key: 'menu',
+        label: 'Menu',
+    },
+    {
+        key: 'category',
+        label: 'Category',
+    },
+    {
+        key: 'account',
+        label: 'Account',
+    }
+];
 
 const Navbar = () => {
-
+    const currentMenu = 'menu';
     return (
         <header className="p-3 border-b relative">
-            <div className="p-5 flex justify-between gap-10 sticky">
-                <div>
+            <div className="p-5 flex justify-center sm:justify-between gap-10 sticky">
+                <div className="flex items-center justify-center">
                     <Image src="/next.svg" width={180} height={300} alt="" />
                 </div>
-                <div className="w-[50%] relative">
+                <div className="w-[50%] relative hidden sm:block">
                     {/* <div className="absolute"></div> */}
                     <input type="text" className="border w-full p-4 rounded-md" placeholder="Search Movie" />
                 </div>
-                <div className="flex gap-5 items-center">
-                    <div>
-                        <Link href="/">
-                            <span className="text-xl font-bold">Menu</span>
-                        </Link>
-                    </div>
-                    <div>
-                        <Link href="/">
-                            <span className="text-xl">Category</span>
-                        </Link>
-                    </div>
-                    <div>
-                        <Link href="/">
-                            <span className="text-xl">Account</span>
-                        </Link>
-                    </div>
+                <div className="gap-5 items-center hidden sm:flex">
+                    {
+                        menus && menus.map(menu => (
+                            <div key={menu.key}>
+                                <Link href={menu.key}>
+                                    <span className={`text-md ${currentMenu === menu.key ? 'font-bold' : ''}`}>{menu.label}</span>
+                                </Link>
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </header>
     );
 };
-export default Navbar
+export default Navbar;
