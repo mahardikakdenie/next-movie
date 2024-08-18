@@ -1,9 +1,9 @@
-import MovieList from "@/app/components/MoveList/index";
+import MovieList from "@/components/MoveList/index";
 
 // eslint-disable-next-line @next/next/no-async-client-component
 const Home = async () => {
 
-  const responses = await fetch(`${process.env.NEXT_BASE_API_URL}/seasons/upcoming?limit=10`);
+  const responses = await fetch(`${process.env.NEXT_BASE_API_URL}/top/anime?limit=10`);
 
   const movies: any = await responses.json();
 
