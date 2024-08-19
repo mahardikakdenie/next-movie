@@ -7,15 +7,6 @@ import { Movie } from '@/lib/movie-detai-types';
 type Params = {
 	id: string;
 };
-
-type Images = {
-	jpg: {
-		image_url: string;
-		small_image_url: string;
-		large_image_url: string;
-	};
-};
-
 // Define the type for the metadata function argument
 export async function generateMetadata({
 	params,
