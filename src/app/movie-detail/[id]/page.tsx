@@ -10,11 +10,7 @@ type SearchParamProps = {
 	searchParams: Record<string, string> | null | undefined;
 };
 
-const MoviePage = ({
-	searchParams,
-}: {
-	searchParams: SearchParamProps['searchParams'];
-}) => {
+const MoviePage = () => {
 	const router = useRouter();
 	const params = useParams();
 	const { id } = params as { id: string };
