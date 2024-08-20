@@ -6,10 +6,6 @@ import Image from 'next/image';
 import Modal from '@/components/Modal/index';
 import { Movie } from '@/lib/movie-detai-types';
 
-type SearchParamProps = {
-	searchParams: Record<string, string> | null | undefined;
-};
-
 const MoviePage = () => {
 	const router = useRouter();
 	const params = useParams();
