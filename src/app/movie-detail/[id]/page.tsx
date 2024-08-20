@@ -1,65 +1,69 @@
-import { Metadata } from 'next';
+'use client'; // This directive makes the file a client component
 
+import { useEffect, useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
 import Image from 'next/image';
+import Modal from '@/components/Modal/index';
 import { Movie } from '@/lib/movie-detai-types';
 
-// Define types for the params and movie objects
-type Params = {
-	id: string;
+type SearchParamProps = {
+	searchParams: Record<string, string> | null | undefined;
 };
-// Define the type for the metadata function argument
-export async function generateMetadata({
-	params,
+
+const MoviePage = ({
+	searchParams,
 }: {
-	params: Params;
-}): Promise<Metadata> {
-	const { id } = params;
+	searchParams: SearchParamProps['searchParams'];
+}) => {
+	const router = useRouter();
+	const params = useParams();
+	const { id } = params as { id: string };
+	const [movie, setMovie] = useState<Movie | null>(null);
+	const [isOpenModal, setIsOpenModal] = useState(false);
 
-	// Fetch the data server-side
-	const response = await fetch(
-		`${process.env.NEXT_BASE_API_URL}/anime/${id}`
-	);
-	const movie: Movie = await response.json();
+	useEffect(() => {
+		if (!id) return;
 
-	return {
-		title: movie.data.title,
-		openGraph: {
-			title: movie?.data?.title,
-			images: [
-				{
-					url: movie.data.images.jpg.large_image_url, // Use the URL for large image
-					width: 1200, // Set the width of the image
-					height: 630, // Set the height of the image
-				},
-			],
-		},
-	};
-}
+		const fetchMovie = async () => {
+			try {
+				const response = await fetch(
+					`${process.env.NEXT_PUBLIC_BASE_API_URL}/anime/${id}`
+				);
+				const movieData: Movie = await response.json();
 
-// Define the type for the page component argument
-const MoviePage = async ({ params }: { params: Params }) => {
-	const { id } = params;
 
-	// Fetch the data server-side
-	const response = await fetch(
-		`${process.env.NEXT_BASE_API_URL}/anime/${id}`
-	);
-	const movie: Movie = await response.json();
+				// Update document title dynamically
+				if (movieData?.data?.title) {
+					document.title = movieData.data.title;
+				}
+				
+				setMovie(movieData);
+			} catch (error) {
+				console.error('Failed to fetch movie data:', error);
+			}
+		};
+
+		fetchMovie();
+	}, [id]);
+
+	if (!movie) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<div className='p-10 bg-gray-100 min-h-screen'>
 			<div className='mx-auto bg-white shadow-lg rounded-lg overflow-hidden'>
 				<div className='grid grid-cols-1 md:grid-cols-3 gap-5 p-5'>
-					<div className='relative'>
+					<div className='relative cursor-pointer' onClick={() => setIsOpenModal(true)}>
 						{movie && movie.data && (
-                            <Image
-                                src={movie.data.images.jpg.large_image_url}
-                                alt={movie.data.title}
-                                className='w-full h-[610px] object-cover rounded-md'
-                                width={700}
-                                height={610}
-                            />
-                        )}
+							<Image
+								src={movie.data.images.jpg.large_image_url}
+								alt={movie.data.title}
+								className='w-full h-[610px] object-cover rounded-md'
+								width={700}
+								height={610}
+							/>
+						)}
 					</div>
 					<div className='col-span-2 flex flex-col justify-between'>
 						<div>
@@ -94,6 +98,12 @@ const MoviePage = async ({ params }: { params: Params }) => {
 					</div>
 				</div>
 			</div>
+			<Modal
+				isOpen={isOpenModal}
+				nameMovie={movie.data.title}
+				onClose={() => setIsOpenModal(false)}
+				trailerUrl={movie.data.trailer.youtube_id}
+			/>
 		</div>
 	);
 };
