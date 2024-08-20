@@ -1,15 +1,33 @@
-import MovieList from "@/components/MoveList/index";
+'use client';
 
-// eslint-disable-next-line @next/next/no-async-client-component
-const Home = async () => {
+import { useState, useEffect } from 'react';
+import MovieList from "@/components/MovieList/index";
+import { getData } from "@/lib/api/movieApi";
 
-  const responses = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/top/anime?limit=10`);
+const Home = () => {
+  const [movies, setMovies] = useState<any>([]);
 
-  const movies: any = await responses.json();
+  useEffect(() => {
+    const fetchData = () => {
+      const callback = (res: any) => {
+        setMovies(res.data);
+      };
+      
+      const err = (e: any) => {
+        console.error(e);
+      };
+
+      getData({ limit: 15 }, callback, err);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="p-10">
-      <h1 className="text-4xl mb-4 font-bold text-center sm:text-start">Paling Populer</h1>
+      <h1 className="text-4xl mb-4 font-bold text-center sm:text-start">
+        Paling Populer
+      </h1>
       <MovieList movies={movies} />
     </div>
   );

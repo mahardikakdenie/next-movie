@@ -10,6 +10,9 @@ const nextConfig = {
             {
                 hostname: "cdn.myanimelist.net",
             },
+            {
+                hostname: "api.jikan.moe",
+            },
         ],
     }
 };
