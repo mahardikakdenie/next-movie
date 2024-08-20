@@ -31,6 +31,7 @@ const ImageMovie: React.FC<Props> = ({ movie, openModal }) => {
 
 const MovieDetail: React.FC<Props> = ({ movie, movieEpisodes }) => {
 	const [isOpenModal, setIsOpenModal] = useState(false);
+
 	return (
 		<div className='p-10 bg-gray-100 min-h-screen'>
 			<div className='mx-auto bg-white shadow-lg rounded-lg overflow-hidden'>
@@ -92,19 +93,8 @@ const MovieDetail: React.FC<Props> = ({ movie, movieEpisodes }) => {
 						{movieEpisodes?.map((episode: any, index: number) => (
 							<div
 								key={index}
-								className='bg-white shadow-md rounded-md overflow-hidden hover:shadow-lg transition-shadow duration-300'>
-								<div className='relative h-50 w-full'>
-									{/* <Link href={episode.url} target='_blank'>
-                                        <Image
-                                            src={movie.data.images.jpg.image_url} // Replace with the actual image URL if available
-                                            alt={`Episode ${episode.title}`}
-                                            width={100}
-                                            height={100}
-                                            objectFit='cover'
-                                            className='rounded-md w-full'
-                                        />
-                                    </Link> */}
-								</div>
+								className='bg-white shadow-md rounded-md overflow-hidden hover:shadow-lg transition-shadow duration-300'
+							>
 								<div className='p-4'>
 									<h3 className='text-lg font-semibold text-gray-800 mb-2 truncate'>
 										#{index + 1} {episode.title}
@@ -126,7 +116,6 @@ const MovieDetail: React.FC<Props> = ({ movie, movieEpisodes }) => {
 						))}
 					</div>
 				</div>
-				);
 			</div>
 			<Modal
 				isOpen={isOpenModal}
