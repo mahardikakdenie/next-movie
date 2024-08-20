@@ -9,9 +9,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, trailerUrl, nameMovie = '' }) => {
-    if (!isOpen) return null;
-
-    return (
+    return ( isOpen &&
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-7xl relative">
                 <div className='flex justify-between p-5'>
