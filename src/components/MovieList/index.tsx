@@ -29,7 +29,7 @@ const ImageMovie = ({ movie }: ImageMovieProps) => {
 
 	return (
 		<Image
-			src={movie.images.jpg.image_url}
+			src={movie?.images?.jpg?.image_url}
 			className='rounded-lg w-full object-cover transition-transform duration-300 transform hover:scale-105'
 			width={200}
 			height={300}

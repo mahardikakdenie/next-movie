@@ -6,13 +6,15 @@ import Image from 'next/image';
 import Modal from '@/components/Modal/index';
 import MovieDetail from '@/components/MovieDetail';
 import { Movie } from '@/lib/movie-detai-types';
+import { getMovieEpisodes } from '@/lib/api/movieEpisodesApi';
+import { AxiosError, AxiosResponse } from 'axios';
 
 const MoviePage = () => {
 	const router = useRouter();
 	const params = useParams();
 	const { id } = params as { id: string };
 	const [movie, setMovie] = useState<Movie | null>(null);
-	const [isOpenModal, setIsOpenModal] = useState(false);
+	const [movieEpisodes, setMovieEpisodes] = useState<any>([]);
 
 	useEffect(() => {
 		if (!id) return;
@@ -36,7 +38,19 @@ const MoviePage = () => {
 			}
 		};
 
+		const getDataMovieEpisodes = () => {
+			const callback = (res: AxiosResponse) => {
+				const data = res?.data;
+				setMovieEpisodes(data.data);
+			};
+			const err = (e: AxiosError) => {
+				console.log(e);
+			};
+			getMovieEpisodes(id, callback, err);
+		};
+
 		fetchMovie();
+		getDataMovieEpisodes();
 	}, [id]);
 
 	if (!movie) {
@@ -44,7 +58,7 @@ const MoviePage = () => {
 	}
 
 	return (
-		<MovieDetail movie={movie} />
+		<MovieDetail movie={movie} movieEpisodes={movieEpisodes} />
 	);
 };
 

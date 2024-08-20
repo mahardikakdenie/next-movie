@@ -3,9 +3,11 @@ import { Movie } from '@/lib/movie-detai-types';
 import Image from 'next/image';
 import { useState } from 'react';
 import Modal from '@/components/Modal/index';
+import Link from 'next/link';
 
 interface Props {
 	movie: Movie;
+	movieEpisodes?: any;
 	openModal?: () => void;
 }
 
@@ -27,7 +29,7 @@ const ImageMovie: React.FC<Props> = ({ movie, openModal }) => {
 	);
 };
 
-const MovieDetail: React.FC<Props> = ({ movie }) => {
+const MovieDetail: React.FC<Props> = ({ movie, movieEpisodes }) => {
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	return (
 		<div className='p-10 bg-gray-100 min-h-screen'>
@@ -81,6 +83,50 @@ const MovieDetail: React.FC<Props> = ({ movie }) => {
 						)}
 					</div>
 				</div>
+                {/* Episodes */}
+				<div className='p-6'>
+                    <div className='my-4'>
+                        <h3 className='text-2xl font-bold'>Episodes {movie.data.title}</h3>
+                    </div>
+					<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
+						{movieEpisodes?.map((episode: any, index: number) => (
+							<div
+								key={index}
+								className='bg-white shadow-md rounded-md overflow-hidden hover:shadow-lg transition-shadow duration-300'>
+								<div className='relative h-50 w-full'>
+									{/* <Link href={episode.url} target='_blank'>
+                                        <Image
+                                            src={movie.data.images.jpg.image_url} // Replace with the actual image URL if available
+                                            alt={`Episode ${episode.title}`}
+                                            width={100}
+                                            height={100}
+                                            objectFit='cover'
+                                            className='rounded-md w-full'
+                                        />
+                                    </Link> */}
+								</div>
+								<div className='p-4'>
+									<h3 className='text-lg font-semibold text-gray-800 mb-2 truncate'>
+										#{index + 1} {episode.title}
+									</h3>
+									<p className='text-sm text-gray-600'>
+										Aired: {episode.aired}
+									</p>
+									<p className='text-sm text-gray-600'>
+										Score: {episode.score}
+									</p>
+									<p className='text-sm text-gray-600'>
+										Forum Url: <Link href={episode.forum_url} target='_blank' className='underline text-indigo-600'>{episode.forum_url}</Link>
+									</p>
+									<p className='text-sm text-gray-600'>
+										{episode.filler ? 'Filler' : 'Canon'}
+									</p>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+				);
 			</div>
 			<Modal
 				isOpen={isOpenModal}
