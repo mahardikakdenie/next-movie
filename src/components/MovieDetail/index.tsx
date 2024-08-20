@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import Modal from '@/components/Modal/index';
 import Link from 'next/link';
+import dayjs from 'dayjs';
 
 interface Props {
 	movie: Movie;
@@ -100,7 +101,7 @@ const MovieDetail: React.FC<Props> = ({ movie, movieEpisodes }) => {
 										#{index + 1} {episode.title}
 									</h3>
 									<p className='text-sm text-gray-600'>
-										Aired: {episode.aired}
+										Aired: {dayjs(episode.aired).format('dddd, DD MMMM YYYY')}
 									</p>
 									<p className='text-sm text-gray-600'>
 										Score: {episode.score}
