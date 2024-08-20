@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import SearchModal from "./Modal/search-modal";
 
 const menus = [
     {
@@ -19,6 +21,8 @@ const menus = [
 
 const Navbar = () => {
     const currentMenu = 'menu';
+    const [isOpenSearchVisible, setIsOpenSearchVisible] = useState<boolean>(false);
+
     return (
         <header className="p-3 border-b relative">
             <div className="p-5 flex justify-center sm:justify-between gap-10 sticky">
@@ -28,7 +32,7 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="w-[50%] relative hidden sm:block">
-                    <input type="text" className="border w-full p-4 rounded-md" placeholder="Search Movie" />
+                    <input type="text" className="border w-full p-4 rounded-md" placeholder="Search Movie" onFocus={() => setIsOpenSearchVisible(true)} />
                 </div>
                 <div className="gap-5 items-center hidden sm:flex">
                     {
@@ -42,6 +46,7 @@ const Navbar = () => {
                     }
                 </div>
             </div>
+            <SearchModal isOpen={isOpenSearchVisible} onClose={() => setIsOpenSearchVisible(false)} />
         </header>
     );
 };
