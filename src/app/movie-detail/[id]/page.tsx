@@ -54,7 +54,7 @@ const MoviePage = () => {
 	}, [id]);
 
 	if (!movie) {
-		return <div>Loading...</div>;
+		return <div className='loader' />;
 	}
 
 	return (
