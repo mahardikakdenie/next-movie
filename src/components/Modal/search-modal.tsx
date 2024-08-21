@@ -14,14 +14,14 @@ const Header: React.FC<ModalHeader> = ({ onClose }) => {
 	return (
 		<div className='flex justify-between p-5'>
 			<div>
-				<h3 className='text-xl font-bold'>Search Modal</h3>
+				<h3 className='font-bold'>Search Modal</h3>
 			</div>
 			<button
 				onClick={onClose}
 				className='text-gray-600 hover:text-gray-900'>
 				<svg
 					xmlns='http://www.w3.org/2000/svg'
-					className='h-8 w-8'
+					className='h-6 w-6'
 					viewBox='0 0 24 24'
 					fill='none'
 					stroke='currentColor'

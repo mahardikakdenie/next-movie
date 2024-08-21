@@ -28,7 +28,7 @@ const Navbar = () => {
             <div className="p-5 flex justify-center sm:justify-between gap-10 sticky">
                 <div className="flex items-center justify-center">
                     <Link href="/">
-                        <Image src="/next.svg" width={180} height={300} alt="" />
+                        <Image src="/next.svg" width={150} height={100} alt="" />
                     </Link>
                 </div>
                 <div className="w-[50%] relative hidden sm:block">
