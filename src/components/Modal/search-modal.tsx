@@ -45,13 +45,13 @@ const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 						<div className='px-6 relative sm:block'>
 							<input
 								type='text'
-								className='border w-full p-4 rounded-md'
+								className='border w-full p-2 text-sm rounded-md'
 								placeholder='Search Movie'
 							/>
 						</div>
 						<div className='flex justify-end mt-5'>
 							<button
-								className='border border-indigo-600 px-5 py-2 text-slate-700 font-bold rounded-lg hover:text-indigo-400'
+								className='border border-indigo-600 px-3 py-2 text-xs text-slate-700 font-bold rounded-md hover:text-indigo-400'
 							>
 								Search
 							</button>

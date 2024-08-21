@@ -22,6 +22,7 @@ const menus = [
 const Navbar = () => {
     const currentMenu = 'menu';
     const [isOpenSearchVisible, setIsOpenSearchVisible] = useState<boolean>(false);
+    const [search, setSearch] = useState<string>('');
 
     return (
         <header className="p-3 border-b relative">
@@ -32,7 +33,14 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="w-[50%] relative hidden sm:block">
-                    <input type="text" className="border w-full p-4 rounded-md" placeholder="Search Movie" onFocus={() => setIsOpenSearchVisible(true)} />
+                    <input
+                        value={search}
+                        type="text" 
+                        className="border w-full p-4 rounded-md" 
+                        placeholder="Search Movie" 
+                        onFocus={() => setIsOpenSearchVisible(true)}
+                        onInput={() => setSearch('')}
+                    />
                 </div>
                 <div className="gap-5 items-center hidden sm:flex">
                     {
