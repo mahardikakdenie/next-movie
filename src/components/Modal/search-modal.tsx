@@ -1,5 +1,7 @@
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface ModalProps {
 	isOpen: boolean;
@@ -36,6 +38,17 @@ const Header: React.FC<ModalHeader> = ({ onClose }) => {
 };
 
 const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+	const router = useRouter();
+	const [search, setSearch] = useState<string>('');
+	const onInputSearch = (e:any): void => {
+		const value: string = e.target.value;
+		setSearch(value);
+	}
+
+	const submitSearch = (): void => {
+		router.push(`/search/${search}`);
+		onClose();
+	};
 	return (
 		isOpen && (
 			<div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'>
@@ -47,11 +60,13 @@ const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 								type='text'
 								className='border w-full p-2 text-sm rounded-md'
 								placeholder='Search Movie'
+								onChange={(e) => onInputSearch(e) }
 							/>
 						</div>
 						<div className='flex justify-end mt-5'>
 							<button
 								className='border border-indigo-600 px-3 py-2 text-xs text-slate-700 font-bold rounded-md hover:text-indigo-400'
+								onClick={() => submitSearch()}
 							>
 								Search
 							</button>
