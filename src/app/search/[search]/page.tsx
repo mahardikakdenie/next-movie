@@ -42,16 +42,19 @@ const ImageMovie = ({ movie }: ImageMovieProps) => {
 const Page = () => {
 	const { search }: { search: string } = useParams();
 	const [movies, setMovies] = useState<Array<Movie>>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	useEffect(() => {
 		document.title = `Search movie with keyword : ${search}`;
 		const getSearch = () => {
+			setIsLoading(true);
 			const params = {
 				q: search,
 			};
 			const callback = (res: AxiosResponse) => {
 				const data = res?.data;
 				setMovies(data.data);
+				setIsLoading(false);
 			};
 			const err = (e: AxiosError) => {
 				console.log(e);
@@ -64,13 +67,21 @@ const Page = () => {
 
 	return (
 		<div>
-			<div className='flex justify-center mt-6 px-4'>
+			<div className='mt-6 px-4'>
 				<div className='border p-3 w-full text-center rounded-md'>
 					<span className='text-sm'>Search movie with keyword : <b>{search}</b></span>
 				</div>
+				<div className='text-center mt-4'>
+					{ !isLoading && movies.length === 0 && (
+						<b>No Movie with this keyword</b>
+					)}
+				</div>
 			</div>
+			{isLoading && (
+				<div className='loader'></div>
+			)}
 			<div className='grid sm:grid-cols-5 grid-cols-2 gap-6 p-6'>
-				{movies?.map((movie, index) => (
+				{ !isLoading &&movies?.map((movie, index) => (
 					<Link
 						href={`/movie-detail/${movie.mal_id}`}
 						key={index}
