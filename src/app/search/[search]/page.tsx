@@ -43,6 +43,7 @@ const Page = () => {
 	const { search }: { search: string } = useParams();
 	const [movies, setMovies] = useState<Array<Movie>>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [page, setPage] = useState<Number>(1);
 
 	useEffect(() => {
 		document.title = `Search movie with keyword : ${search}`;
@@ -50,20 +51,24 @@ const Page = () => {
 			setIsLoading(true);
 			const params = {
 				q: search,
+				limit: 16,
+				page,
 			};
 			const callback = (res: AxiosResponse) => {
 				const data = res?.data;
 				setMovies(data.data);
 				setIsLoading(false);
 			};
+
 			const err = (e: AxiosError) => {
 				console.log(e);
 			};
+
 			getMovieSearch(params, callback, err);
 		};
 
 		getSearch();
-	}, [search]);
+	}, [search, page]);
 
 	return (
 		<div>
@@ -80,8 +85,8 @@ const Page = () => {
 			{isLoading && (
 				<div className='loader'></div>
 			)}
-			<div className='grid sm:grid-cols-5 grid-cols-2 gap-6 p-6'>
-				{ !isLoading &&movies?.map((movie, index) => (
+			<div className='grid sm:grid-cols-8 grid-cols-2 gap-6 p-6'>
+				{ !isLoading && movies?.map((movie, index) => (
 					<Link
 						href={`/movie-detail/${movie.mal_id}`}
 						key={index}
@@ -98,6 +103,13 @@ const Page = () => {
 					</Link>
 				))}
 			</div>
+			{!isLoading && movies.length > 0 && (
+				<div className='my-6 flex justify-center'>
+					<button className='px-5 py-2 border rounded hover:bg-indigo-200 hover:text-indigo-500'>
+						Load More
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };

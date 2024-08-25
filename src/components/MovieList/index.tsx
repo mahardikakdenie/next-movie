@@ -13,9 +13,7 @@ type Movie = {
 };
 
 type MovieListProps = {
-	movies: {
-		data: Movie[];
-	};
+	movies: Movie[],
 };
 
 type ImageMovieProps = {
@@ -43,8 +41,8 @@ const ImageMovie = ({ movie }: ImageMovieProps) => {
 // Main Content
 const MovieList = ({ movies }: MovieListProps) => {
 	return (
-		<div className='grid sm:grid-cols-5 grid-cols-2 gap-6 p-6'>
-			{movies?.data?.map((movie) => (
+		<div className='grid sm:grid-cols-8 grid-cols-2 gap-6 p-6'>
+			{movies?.map((movie) => (
 				<Link
 					href={`/movie-detail/${movie.mal_id}`}
 					key={movie.mal_id}
