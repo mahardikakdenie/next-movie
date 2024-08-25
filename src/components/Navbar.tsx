@@ -4,20 +4,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import SearchModal from './Modal/search-modal';
 
-const menus = [
-	{
-		key: '/',
-		label: 'Menu',
-	},
-	{
-		key: 'category',
-		label: 'Category',
-	},
-	{
-		key: 'account',
-		label: 'Account',
-	},
-];
+const menus: any = [];
 
 interface NavLinks {
 }
@@ -33,7 +20,7 @@ const NavLinks: React.FC<NavLinks> = () => {
 	};
 
 	return (
-		menus && menus.map((menu, index) => (
+		menus && menus.map((menu: any, index: number) => (
 			<div key={index}>
 				<Link href={menu.key} onClick={() => setCurrentMenu(menu.key)}>
 					<span className={`text-[15px] hover:font-bold ${isMenuActive(menu.key)}`}>
@@ -57,7 +44,7 @@ const Navbar = () => {
 					<Link href='/'>
 						<Image
 							src='/next.svg'
-							width={150}
+							width={100}
 							height={100}
 							alt=''
 						/>
@@ -67,15 +54,15 @@ const Navbar = () => {
 					<input
 						value={search}
 						type='text'
-						className='border w-full p-4 rounded-md'
+						className='border w-full p-2 rounded-md'
 						placeholder='Search Movie'
 						onFocus={() => setIsOpenSearchVisible(true)}
 						onInput={() => setSearch('')}
 					/>
 				</div>
-				<div className='gap-5 items-center hidden sm:flex'>
+				{/* <div className='gap-5 items-center hidden sm:flex'>
 					<NavLinks />
-				</div>
+				</div> */}
 			</div>
 			<SearchModal
 				isOpen={isOpenSearchVisible}

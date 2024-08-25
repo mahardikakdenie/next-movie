@@ -10,6 +10,7 @@ const Home = () => {
 	const [movies, setMovies] = useState<any>([]);
 	const [page, setPage] = useState(1);
 	const [hasMore, setHasMore] = useState(true);
+  const [meta, setMeta] = useState<any>(null);
 
 	useEffect(() => {
 		const fetchMovies = () => {
@@ -22,7 +23,8 @@ const Home = () => {
 			const callback = (res: AxiosResponse) => {
 				setIsLoading(false);
 				const data = res?.data?.data ?? [];
-				console.log('page -> ', page);
+				console.log('page -> ', res.data);
+        setMeta(res?.data);
 
 				if (page === 1) {
 					setMovies(data); // Jika page 1, set data baru
